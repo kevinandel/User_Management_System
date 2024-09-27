@@ -1,0 +1,65 @@
+<div class="container">
+    <h1>Admin Dashboard</h1>
+    
+    <!-- Search form -->
+    <form method="post">
+        <input type="search" name="searchItem" placeholder="search here" />
+        <input type="submit" value="Search User" />
+    </form>
+
+    <!-- Add new user link -->
+    <a href="/admin/new-user" class="add-new">Add New User</a>
+
+    <!-- Users table -->
+    <table>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone No</th>
+            <th colspan="2">Action</th>
+        </tr>
+
+        <!-- Check if there are users to display -->
+        <% if (users.length > 0) { %>
+            <% for (let i = 0; i < users.length; i++) { %>
+            <tr>
+                <td>
+                    <img src="/userImages/<%= users[i].image %>" alt="<%= users[i].name %>'s image" style="width: 50px; height: 50px;">
+                </td>
+                <td><%= users[i].name %></td>
+                <td><%= users[i].email %></td>
+                <td><%= users[i].mobile %></td>
+                <td class="action-links">
+                    <a href="/admin/edit-user?id=<%= users[i]._id %>">Edit</a>
+                    <a href="/admin/delete-user?id=<%= users[i]._id %>" class="delete">Delete</a>
+                </td>
+            </tr>
+            <% } %>
+        <% } else { %>
+            <!-- Display message if no users found -->
+            <tr>
+                <td colspan="6" class="no-users">User not found</td>
+            </tr>
+        <% } %>
+    </table>
+
+    <!-- Display success or error message -->
+    <% if (message) { %>
+        <div class="alert alert-info" style="color: rgb(1, 175, 9);">
+            <%= message %>
+        </div>
+
+        <!-- Script to remove the message from URL after it's shown -->
+        <script>
+            if (window.history.replaceState) {
+                const url = new URL(window.location);
+                url.searchParams.delete('message'); // Remove 'message' query parameter
+                window.history.replaceState(null, '', url);
+            }
+        </script>
+    <% } %>
+
+    <!-- Back to home link -->
+    <a href="/admin/home" class="back-home">Go To Home</a>
+</div>

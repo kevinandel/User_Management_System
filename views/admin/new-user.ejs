@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/form/newuser.css"/>
+</head>
+<body>
+<div class="container">
+    <h1>Add New User</h1>
+
+    <form action="/admin/new-user" method="post" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Enter Name" required>
+        <input type="email" name="email" placeholder="Enter Email" required>
+        <input type="text" name="mno" placeholder="Enter Mobile" required>
+        <input type="file" name="image" required>
+        <input type="submit" value="ADD USER">
+    </form>
+
+    <% if (typeof message !== 'undefined' && message) { %>  <!-- Checking if the message exists -->
+        <div class="alert alert-info" style="color: red;">
+            <%= message %>
+        </div>
+        <script>
+            // Remove the query string from the URL after the message is shown
+            if (window.history.replaceState) {
+                const url = new URL(window.location);
+                url.searchParams.delete('message'); // Remove 'message' query parameter
+                window.history.replaceState(null, '', url);
+            }
+        </script>
+    <% } %>
+
+    <a href="/admin/dashboard" class="back-link">Back To Dashboard</a>
+</div>
+
+</body>
+</html>
